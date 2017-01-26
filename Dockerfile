@@ -8,6 +8,4 @@ RUN gem install rails --no-ri --no-rdoc
 
 WORKDIR /opt
 
-ENTRYPOINT ["rails", "new"]
-
-CMD ["--help"]
+ENTRYPOINT ["rails", "new", "-B"]
