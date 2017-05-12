@@ -1,9 +1,9 @@
 ## Usage
 
-````
+```
 $ docker run --rm -v "$PWD":/opt noonarai/rails-new[:tag] <application_name> [option]
 ```
-`
+
 ## Example
 
 - Build a new application which name is "sandbox".
