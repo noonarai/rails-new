@@ -7,7 +7,7 @@ RUN apk add --no-cache \
   sqlite-dev \
   postgresql-dev
 
-RUN gem install rails --version "~>6.0" --no-ri --no-rdoc
+RUN gem install rails --version "~>6.0"
 
 WORKDIR /opt
 
