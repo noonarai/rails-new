@@ -1,15 +1,23 @@
+FROM node:13.3-alpine as node
+
 FROM ruby:2.6-alpine
+
+ENV LANG C.UTF-8
 
 RUN apk add --no-cache \
   alpine-sdk \
-  nodejs \
-  mariadb-dev \
-  sqlite-dev \
-  postgresql-dev
+  postgresql-dev \
+  tzdata
 
-RUN gem install rails --version "~>6.0"
+COPY --from=node /opt/yarn-v* /opt/yarn
+COPY --from=node /usr/local/bin/node /usr/local/bin/
+# COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+RUN ln -s /opt/yarn/bin/yarn /usr/local/bin/yarn \
+    && ln -s /opt/yarn/bin/yarnpkg /usr/local/bin/yarnpkg
 
 WORKDIR /opt
+
+RUN gem install rails --version "~>6.0"
 
 ENTRYPOINT ["rails", "new"]
 
