@@ -1,28 +1,22 @@
-version: '3.7'
+version: '3'
 
 services:
   app: &app_base
     build:
       context: .
       dockerfile: Dockerfile.dev
-    command: sh -c "rm -f tmp/pids/server.pid && bundle exec rails s -b '0.0.0.0'"
     environment:
-      - DATABASE_HOST=pg
-      - DATABASE_USER=postgres
-      - DATABASE_PASSWORD=password
+      - DATABASE_URL=postgres://postgres:password@pg:5432
     volumes:
       - .:/opt/app
       - gems:/usr/local/bundle
       - node-modules:/usr/src/app/node_modules
     ports:
       - 3000:3000
+    command: sh -c "rm -f tmp/pids/server.pid && bundle exec rails s -b '0.0.0.0'"
   webpacker:
     <<: *app_base
     command: ./bin/webpack-dev-server
-    volumes:
-      - ./:/opt/app
-      - gems:/usr/local/bundle
-      - node-modules:/usr/src/app/node_modules
     ports:
       - 3035:3035
   pg:
@@ -33,7 +27,8 @@ services:
     volumes:
       - pg-data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+      - 5432:5432
+
 volumes:
   gems:
   node-modules:
