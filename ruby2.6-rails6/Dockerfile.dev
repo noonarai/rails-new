@@ -15,7 +15,7 @@ COPY --from=node /usr/local/bin/node /usr/local/bin/
 RUN ln -s /opt/yarn/bin/yarn /usr/local/bin/yarn \
     && ln -s /opt/yarn/bin/yarnpkg /usr/local/bin/yarnpkg
 
-WORKDIR /opt/app
+RUN gem install rails --version "~>6.0"
 
 ENV ENTRYKIT_VERSION 0.4.0
 
@@ -25,6 +25,8 @@ RUN wget https://github.com/progrium/entrykit/releases/download/v${ENTRYKIT_VERS
     && mv entrykit /bin/entrykit \
     && chmod +x /bin/entrykit \
     && entrykit --symlink
+
+WORKDIR /opt/myapp
 
 ENTRYPOINT [ \
     "prehook", "ruby -v", "--", \
