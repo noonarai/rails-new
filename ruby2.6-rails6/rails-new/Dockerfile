@@ -15,6 +15,8 @@ COPY --from=node /usr/local/bin/node /usr/local/bin/
 RUN ln -s /opt/yarn/bin/yarn /usr/local/bin/yarn \
     && ln -s /opt/yarn/bin/yarnpkg /usr/local/bin/yarnpkg
 
+RUN gem install rails --version "~>6.0"
+
 WORKDIR /opt
 
 ENTRYPOINT ["rails", "new"]
